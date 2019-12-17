@@ -1,5 +1,3 @@
-const API_KEY = "pk.eyJ1IjoibTFicmVuIiwiYSI6ImNrM3J5OGo1azAwMW8zY3JsZ2VzaDF2aGYifQ.pW9YUK8gYhCsFH7dQL6cbw";
-
 // Earthquake API URL Link
 let eqURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
@@ -11,8 +9,18 @@ let outdoorsBKG = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.
   accessToken: API_KEY
 });
 
-let satelliteBKG = outdoorsBKG.id.replace("mapbox.outdoors", "mapbox.satellite");
+let satelliteBKG = outdoorsBKG;
+satelliteBKG.id = "mapbox.satellite";
 
-let 
+let streetsBKG = outdoorsBKG;
+streetsBKG.id = "mapbox.streets";
 
 // Create a map with the above layers
+let map = L.map("map", {
+    center: [37.7749, -122.431297],
+    zoom: 5,
+    layers: [outdoorsBKG, satelliteBKG, streetsBKG]
+});
+
+// Add the outdoorsBKG layer to the map by default
+outdoorsBKG.addTo(map)
